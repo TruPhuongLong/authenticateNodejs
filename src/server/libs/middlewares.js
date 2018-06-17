@@ -1,6 +1,7 @@
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import mongoose from 'mongoose';
 const MongoStore = require('connect-mongo')(session);
 
 module.exports = app => {
@@ -15,7 +16,7 @@ module.exports = app => {
         resave: true,
         saveUninitialized: false,
         store: new MongoStore({
-            mongooseConnection: db
+            mongooseConnection: mongoose.connection
         })
     }))
 }

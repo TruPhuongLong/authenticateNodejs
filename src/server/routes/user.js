@@ -3,7 +3,7 @@ import { User } from '../models/user';
 module.exports = app => {
 
     //POST / signup:
-    app.post('/singup', (req, res) => {
+    app.post('/signup', (req, res) => {
         const body = req.body;
         if (body.email && body.username && body.password && body.passwordConf) {
             let userdata = {
@@ -24,9 +24,20 @@ module.exports = app => {
         }
     })
 
-    //GET / login:
-    app.get('/login', (req, res) => {
-
+    //POST / login:
+    app.post('/login', (req, res) => {
+        const body = req.body;
+        if (body.email && body.password) {
+            User.authenticate(body.email, body.password, (err, user)=>{
+                if(err){
+                    res.status(400).send(err);
+                }
+                if(!user){
+                    res.status(404).send();
+                }
+                res.send(user);
+            })
+        }
     });
 
     // GET /logout
