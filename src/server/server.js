@@ -4,12 +4,14 @@ import consign from 'consign';
 const app = express();
 
 
-app.set("json spaces", 4);
-app.set("port", 3000);
 
 consign()
-    .include("src/server/routes")
+    .include("src/server/models")
+    .then("src/server/libs/middlewares.js")
+    .then("src/server/routes")
+    .then("src/server/libs/boot.js")
     .into(app);
 
 
-app.listen(app.get("port"), () => console.log(`server listen on port ${app.get("port")}`));
+
+
